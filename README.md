@@ -1,6 +1,6 @@
 # Ema john
-A practice project which is an e-commerce website called ema jon.
 [Visit Ema john](https://ema-john-sany.netlify.app)
+A practice project which is an e-commerce website called ema jon.
 ## Features
 * There are some e-commerse products
 * You can add some product to cart
