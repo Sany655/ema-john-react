@@ -1,0 +1,12 @@
+.cart{
+    text-align: center;
+}
+.cart>div>p{
+    display: flex;
+    justify-content: space-between;
+}
+.cart>div>h3{
+    display: flex;
+    justify-content: space-between;
+    color: tomato;
+}

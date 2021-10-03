@@ -1,0 +1,22 @@
+.review{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.review>div:nth-child(1)>div{
+    border: 1px solid gray;
+    padding: 25px;
+    margin: 5px;
+}
+
+@media screen and (max-width:992px) {
+    .review{
+        grid-template-columns: 2fr 1fr;
+    }
+}
+@media screen and (max-width:767px) {
+    .review{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}

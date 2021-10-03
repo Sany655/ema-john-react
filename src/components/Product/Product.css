@@ -1,0 +1,31 @@
+.product{
+    width: 80%;
+    margin-left: auto;
+    display: flex;
+    border-bottom: 1px solid lightgray;
+    padding: 0 0 15px 0;
+}
+.product>div>div>div{
+    float: left;
+    width: 50%;
+}
+.product>div{
+    padding-left: 25px;
+}
+.btn{
+    width: 250px;
+    padding: 5px;
+    background-color: goldenrod;
+    border: 1px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media screen and (max-width:992px) {
+    .product{
+        width: 100%;
+    }
+    .btn{
+        width: 100%;
+    }
+}

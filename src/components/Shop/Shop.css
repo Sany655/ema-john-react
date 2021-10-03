@@ -1,0 +1,30 @@
+main{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+main>section{
+    border-left: 1px solid lightgray;
+    padding: 20px;
+}
+header>form{
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+}
+header>form>input{
+    width: 75%;
+    padding: 5px;
+    margin: 5px;
+}
+
+@media screen and (max-width:992px) {
+    main{
+        grid-template-columns: 2fr 1fr;
+    }
+}
+@media screen and (max-width:767px) {
+    main{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
