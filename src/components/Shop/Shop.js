@@ -36,7 +36,7 @@ function Shop() {
         let newCart;
         let cartItem = cart.find(c=>c.key===product.key)
         if(cartItem){
-            newCart = cart.filter(c=>c.key!=product.key)
+            newCart = cart.filter(c=>c.key!==product.key)
             cartItem.quantity += 1;
             newCart = [...newCart,cartItem]
         }
@@ -53,7 +53,7 @@ function Shop() {
             <header>
                 <form>
                     <input type="text" placeholder="type here to search" onChange={e => handleSearch(e.target.value)} />
-                    <a href="#"><i>🛒 <span>0</span></i></a>
+                    {/* <a ><i>🛒 <span>0</span></i></a> */}
                 </form>
             </header>
             <main>

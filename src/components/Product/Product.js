@@ -1,5 +1,4 @@
 import React from 'react'
-import Rating from 'react-rating'
 import './Product.css'
 
 function Product(props) {
@@ -16,7 +15,7 @@ function Product(props) {
                         <p>Only {stock} left in stock - order soon</p>
                     </div>
                     <div>
-                        <div><Rating fullSymbol={<span>⭐</span>} emptySymbol={<span>⬜</span>} readonly initialRating={star}/></div>
+                        <div>{star/5}</div>
                         <h4>Featurs</h4>
                         <ul>
                             {

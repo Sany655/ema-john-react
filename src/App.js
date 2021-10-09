@@ -1,36 +1,52 @@
-// import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Inventory from './components/Inventory/Inventory';
+import Login from './components/Login/Login';
 import Notfound from './components/Notfound/Notfound';
 import Order from './components/Order/Order';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Register from './components/Register/Register';
 import Review from './components/Review/Review';
 import Shop from './components/Shop/Shop';
+import AuthProvider from './context/AuthProvider';
+import init from './Firebase/firebase.init';
+import Shipping from './components/Shipping/Shipping';
+
+init()
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Router>
         <Header />
         <Switch>
           <Route exact path='/'>
             <Shop></Shop>
           </Route>
+          <Route path='/login'>
+            <Login/>
+          </Route>
+          <Route path='/register'>
+            <Register/>
+          </Route>
           <Route path='/review'>
             <Review />
           </Route>
-          <Route path='/inventory'>
+          <PrivateRoute path='/inventory'>
             <Inventory></Inventory>
-          </Route>
-          <Route path='/order'>
+          </PrivateRoute>
+          <PrivateRoute path='/shipping'>
+            <Shipping></Shipping>
+          </PrivateRoute>
+          <PrivateRoute path='/order'>
             <Order></Order>
-          </Route>
+          </PrivateRoute>
           <Route path='*'>
             <Notfound></Notfound>
           </Route>
         </Switch>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 

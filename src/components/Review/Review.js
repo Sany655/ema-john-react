@@ -18,13 +18,13 @@ function Review() {
         <div className='review'>
             <div>
                 {
-                    cart.map(c => (
-                        <div>
+                    cart.map((c,i) => (
+                        <div key={i}>
                             <h3>{c.name}</h3>
                             <p>Price : {c.price}</p>
                             <p>Quantity : {c.quantity}</p>
                             <p>Total Price : {c.quantity * c.price}</p>
-                            <buttin className="btn" onClick={() => removeCartItem(c.key)}>Remove</buttin>
+                            <button className="btn" onClick={() => removeCartItem(c.key)}>Remove</button>
                         </div>
                     ))
                 }
@@ -34,10 +34,10 @@ function Review() {
                 <button
                     className="btn"
                     onClick={() => {
-                        clearTheCart()
-                        setCart([])
-                        history.push('/order')
-                    }}>Place order</button>
+                        // clearTheCart()
+                        // setCart([])
+                        history.push('/shipping')
+                    }}>Proceed To Shipping</button>
             </Cart>
         </div>
     )
