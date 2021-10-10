@@ -10,7 +10,7 @@ function Shop() {
     const [products, setProducts] = React.useState([])
     const [search, setSearch] = React.useState([])
     React.useEffect(() => {
-        fetch('./fakeData/products.JSON')
+        fetch('./fakeData/products.json')
         .then(response=>response.json())
         .then(data=>{
             setProducts(data)

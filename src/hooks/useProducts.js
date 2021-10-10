@@ -4,7 +4,7 @@ import { useState } from "react"
 const useProducts = () => {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        fetch('./fakeData/products.JSON')
+        fetch('./fakeData/products.json')
         .then(response=>response.json())
         .then(data=>{
             setProducts(data)
