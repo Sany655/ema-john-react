@@ -3,6 +3,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 
 const useFirebase = () => {
     const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const auth = getAuth()
     const googleProvider = new GoogleAuthProvider()
@@ -20,14 +21,18 @@ const useFirebase = () => {
         onAuthStateChanged(auth, (result) => {
             if (result) {
                 setUser(result)
+            }else{
+                setUser({})
             }
+            setLoading(false)
         })
     }, [])
 
     return {
         user,
         signinUsingGoogle,
-        logout
+        logout,
+        loading
     }
 };
 

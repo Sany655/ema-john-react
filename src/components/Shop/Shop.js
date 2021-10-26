@@ -8,15 +8,18 @@ function Shop() {
     const history = useHistory()
     const [cart, setCart] = React.useState([])
     const [products, setProducts] = React.useState([])
+    const [page, setPage] = React.useState(0)
+    const [curPage, setCurPage] = React.useState(0)
     const [search, setSearch] = React.useState([])
     React.useEffect(() => {
-        fetch('./fakeData/products.json')
+        fetch(`http://localhost:5000/products?page=${curPage}&&size=10`)
         .then(response=>response.json())
         .then(data=>{
             setProducts(data)
-            setSearch(data)
+            setSearch(data.products)
+            setPage(Math.ceil(data.count/10))
         })
-    }, [])
+    }, [curPage])
     React.useEffect(() => {
         if (products.length) {
             const savedCart = getStoredCart()
@@ -59,8 +62,16 @@ function Shop() {
             <main>
                 <section>
                     {
-                        search.map((data, index) => <Product key={index} product={data} handleAddToCart={handleAddToCart} />)
+                        search.length>0?(
+                        search.map((data, index) => <Product key={index} product={data} handleAddToCart={handleAddToCart} />)):(
+                            <h1>Loading....</h1>
+                        )
                     }
+                    <div style={pagination}>
+                        {
+                            [...Array(page).keys()].map((i)=><button key={i} style={curPage==i?curPagiBtn:pagiBtn} onClick={()=>setCurPage(i)}>{i+1}</button>)
+                        }
+                    </div>
                 </section>
                 <section>
                     <Cart cart={cart}>
@@ -69,6 +80,27 @@ function Shop() {
                 </section>
             </main></>
     )
+}
+
+const pagination = {
+    margin:5,
+    // padding:10
+}
+
+const pagiBtn = {
+    margin:5,
+    padding:10,
+    border:'none',
+    cursor:'pointer'
+}
+
+const curPagiBtn = {
+    backgroundColor:'blue',
+    color:'white',
+    margin:5,
+    padding:10,
+    border:'none',
+    cursor:'pointer'
 }
 
 export default Shop
