@@ -19,6 +19,9 @@
     border: 1px solid gray;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
 }
 
 @media screen and (max-width:992px) {

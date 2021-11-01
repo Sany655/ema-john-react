@@ -1,19 +1,38 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import useCarts from '../../hooks/useCarts'
-import useProducts from '../../hooks/useProducts'
-import gliphicon from '../../images/giphy.gif'
-import Cart from '../Cart/Cart'
+import React, { useEffect, useState } from 'react'
+import useAuth from '../../hooks/useAuth';
+import { useHistory } from 'react-router-dom';
 function Order() {
-    const [products] = useProducts()
-    const [cart] = useCarts(products)
     const history = useHistory()
+    const { user } = useAuth()
+    const [orders,setOrders] = useState([]);
+    useEffect(()=>{
+        fetch(`http://localhost:5000/orders?email=${user.email}`,{
+            headers:{
+                'authorization': `Bearer ${localStorage.getItem('idToken')}`
+            }
+        }).
+        then(res=>{
+            return res.status === 200?res.json():history.push('/login')
+        }).
+        then(data=>{
+            setOrders(data)
+            console.log(data);
+        });
+    },[])
     return (
         <div>
-            <img src={gliphicon} style={{width:'350px',height:'250px',display:'block',margin:'auto'}} alt="" />
-            <Cart cart={cart}>
-            <button className="btn" onClick={()=>history.push('/')}>Shop more</button>
-            </Cart>
+            <h1>Total placed orders {orders.length}</h1>
+            <ol>
+                {
+                    orders.map(order=>(
+                        <li key={order._id}>
+                            <div>
+                                {order.email}
+                            </div>
+                        </li>
+                    ))
+                }
+            </ol>
         </div>
     )
 }

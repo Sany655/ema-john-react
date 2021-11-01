@@ -1,15 +1,13 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import useCarts from '../../hooks/useCarts'
-import useProducts from '../../hooks/useProducts'
-import { clearTheCart, deleteFromDb } from '../../utilities/fakedb'
+import { deleteFromDb } from '../../utilities/fakedb'
 import Cart from '../Cart/Cart'
 import './Review.css'
 
 function Review() {
     const history = useHistory()
-    const [products] = useProducts()
-    const [cart, setCart] = useCarts(products)
+    const [cart, setCart] = useCarts()
     const removeCartItem = key => {
         setCart(cart.filter(c => c.key !== key))
         deleteFromDb(key)
@@ -31,13 +29,12 @@ function Review() {
             </div>
 
             <Cart cart={cart}>
-                <button
+                <Link to='/shipping' className='btn'>Proceed To Shipping</Link>
+                {/* <button
                     className="btn"
                     onClick={() => {
-                        // clearTheCart()
-                        // setCart([])
                         history.push('/shipping')
-                    }}>Proceed To Shipping</button>
+                    }}></button> */}
             </Cart>
         </div>
     )
