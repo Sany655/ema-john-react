@@ -1,12 +1,13 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import useCarts from '../../hooks/useCarts.js'
 import { addToDb, getStoredCart } from '../../utilities/fakedb.js'
 import Cart from '../Cart/Cart'
 import Product from '../Product/Product'
 import './Shop.css'
 function Shop() {
     const history = useHistory()
-    const [cart, setCart] = React.useState([])
+    const [cart, setCart] = useCarts()
     const [products, setProducts] = React.useState([])
     const [page, setPage] = React.useState(0)
     const [curPage, setCurPage] = React.useState(0)
@@ -19,21 +20,8 @@ function Shop() {
             setSearch(data.products)
             setPage(Math.ceil(data.count/10))
         })
+        console.log(cart.length>0?cart:cart);
     }, [curPage])
-    React.useEffect(() => {
-        if (products.length) {
-            const savedCart = getStoredCart()
-            const storedCart = []
-            for (const key in savedCart) {
-                const addedProduct = products.find(p => p.key === key)
-                if (addedProduct) {
-                    addedProduct.quantity = savedCart[key]
-                    storedCart.push(addedProduct)
-                }
-            }
-            setCart(storedCart)
-        }
-    }, [products])
     const handleAddToCart = (product) => {
         addToDb(product.key)
         let newCart;
