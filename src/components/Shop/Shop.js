@@ -17,6 +17,7 @@ function Shop() {
     const currentPageNoRedux = useSelector(store => store.products).currentPageNo;
     const searchRedux = useSelector(store => store.products).search;
     const searchProductsRedux = useSelector(store => store.products).searchProducts;
+    const searchStatus = useSelector(store => store.products).searchStatus;
     
     useEffect(() => {
         dispatch(getProducts(currentPageNoRedux));
@@ -45,7 +46,7 @@ function Shop() {
                         )
                     }
                     <div style={pagination}>
-                        {
+                        {   searchStatus ||
                             [...Array(pageNoRedux).keys()].map((i) => <button key={i} style={currentPageNoRedux === i ? curPagiBtn : pagiBtn} onClick={() => dispatch(changePageNo(i))}>{i + 1}</button>)
                         }
                     </div>

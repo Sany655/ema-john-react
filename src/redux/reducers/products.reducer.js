@@ -19,7 +19,8 @@ const productReducer = createSlice({
         pageNo: 0,
         currentPageNo: 0,
         search: '',
-        searchProducts: []
+        searchProducts: [],
+        searchStatus:false
     },
     extraReducers: (builder) => {
         builder.addCase(getProducts.pending, (state, action) => {
@@ -39,10 +40,13 @@ const productReducer = createSlice({
             state.currentPageNo = action.payload;
         },
         searchProducts: (state, action) => {
+            state.search = action.payload;
             if (action.payload.length > 0) {
+                state.searchStatus = true;
                 state.searchProducts = state.products.filter(product => product.name.toLowerCase().includes(action.payload.toLowerCase()));
             }else{
                 state.searchProducts = state.products;
+                state.searchStatus = false;
             }
         },
     }
