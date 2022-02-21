@@ -1,69 +1,58 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import useCarts from '../../hooks/useCarts.js'
+import { getProducts, changePageNo, searchProducts } from '../../redux/reducers/products.reducer.js'
 import { addToDb, getStoredCart } from '../../utilities/fakedb.js'
 import Cart from '../Cart/Cart'
 import Product from '../Product/Product'
 import './Shop.css'
 function Shop() {
+    const dispatch = useDispatch();
     const history = useHistory()
-    const [cart, setCart] = useCarts()
-    const [products, setProducts] = React.useState([])
-    const [page, setPage] = React.useState(0)
-    const [curPage, setCurPage] = React.useState(0)
-    const [search, setSearch] = React.useState([])
-    React.useEffect(() => {
-        fetch(`http://localhost:5000/products?page=${curPage}&&size=10`)
-        .then(response=>response.json())
-        .then(data=>{
-            setProducts(data)
-            setSearch(data.products)
-            setPage(Math.ceil(data.count/10))
-        })
-        console.log(cart.length>0?cart:cart);
-    }, [curPage])
-    const handleAddToCart = (product) => {
-        addToDb(product.key)
-        let newCart;
-        let cartItem = cart.find(c=>c.key===product.key)
-        if(cartItem){
-            newCart = cart.filter(c=>c.key!==product.key)
-            cartItem.quantity += 1;
-            newCart = [...newCart,cartItem]
-        }
-        else{
-            newCart = [...cart,product]
-        }
-        setCart(newCart)
-    }
-    const handleSearch = prod => {
-        setSearch(products.filter(product => product.name.toLowerCase().includes(prod.toLowerCase())));
-    }
+
+    const loading = useSelector(store => store.products).loading;
+    const error = useSelector(store => store.products).error;
+    const pageNoRedux = useSelector(store => store.products).pageNo;
+    const currentPageNoRedux = useSelector(store => store.products).currentPageNo;
+    const searchRedux = useSelector(store => store.products).search;
+    const searchProductsRedux = useSelector(store => store.products).searchProducts;
+    
+    useEffect(() => {
+        dispatch(getProducts(currentPageNoRedux));
+    }, [currentPageNoRedux])
+
     return (
         <>
             <header>
                 <form>
-                    <input type="text" placeholder="type here to search" onChange={e => handleSearch(e.target.value)} />
-                    {/* <a ><i>🛒 <span>0</span></i></a> */}
+                    <input value={searchRedux} type="text" placeholder="type here to search" onChange={e => dispatch(searchProducts(e.target.value))} />
                 </form>
             </header>
             <main>
                 <section>
                     {
-                        search.length>0?(
-                        search.map((data, index) => <Product key={index} product={data} handleAddToCart={handleAddToCart} />)):(
+                        loading ? (
                             <h1>Loading....</h1>
+                        ) : (
+                            error ? (
+                                <h4>{error}</h4>
+                            ) : (
+                                searchProductsRedux.map((product, index) => (
+                                    <Product key={index} product={product} />
+                                ))
+                            )
                         )
                     }
                     <div style={pagination}>
                         {
-                            [...Array(page).keys()].map((i)=><button key={i} style={curPage==i?curPagiBtn:pagiBtn} onClick={()=>setCurPage(i)}>{i+1}</button>)
+                            [...Array(pageNoRedux).keys()].map((i) => <button key={i} style={currentPageNoRedux === i ? curPagiBtn : pagiBtn} onClick={() => dispatch(changePageNo(i))}>{i + 1}</button>)
                         }
                     </div>
                 </section>
                 <section>
-                    <Cart cart={cart}>
-                    <button className="btn" onClick={()=>history.push('/review')}>Review your order</button>
+                    <Cart>
+                        <button className="btn" onClick={() => history.push('/review')}>Review your order</button>
                     </Cart>
                 </section>
             </main></>
@@ -71,24 +60,25 @@ function Shop() {
 }
 
 const pagination = {
-    margin:5,
+    margin: 5,
+    textAlign:"right",
     // padding:10
 }
 
 const pagiBtn = {
-    margin:5,
-    padding:10,
-    border:'none',
-    cursor:'pointer'
+    margin: 5,
+    padding: 10,
+    border: 'none',
+    cursor: 'pointer'
 }
 
 const curPagiBtn = {
-    backgroundColor:'blue',
-    color:'white',
-    margin:5,
-    padding:10,
-    border:'none',
-    cursor:'pointer'
+    backgroundColor: 'blue',
+    color: 'white',
+    margin: 5,
+    padding: 10,
+    border: 'none',
+    cursor: 'pointer'
 }
 
 export default Shop

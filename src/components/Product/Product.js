@@ -1,8 +1,11 @@
 import React from 'react'
 import './Product.css'
+import { addToCart } from '../../redux/reducers/cart.reducer';
+import { useDispatch } from 'react-redux';
 
 function Product(props) {
-    const {img,name,seller,price,features,stock,star} = props.product
+    const {img,name,seller,price,features,stock,star} = props.product;
+    const dispatch = useDispatch();
     return (
         <div className='product'>
             <img src={img} alt="" />
@@ -24,7 +27,7 @@ function Product(props) {
                         </ul>
                     </div>
                 </div>
-                <button className="btn" onClick={()=>props.handleAddToCart(props.product)}>🛒 add to cart</button>
+                <button className="btn" onClick={()=>dispatch(addToCart(props.product))}>🛒 add to cart</button>
             </div>
         </div>
     )

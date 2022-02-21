@@ -1,20 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './Cart.css'
+import { getCart } from '../../redux/reducers/cart.reducer'
 
 function Cart(props) {
+    const cartRedux = useSelector(store => store.cart).cart;
+    const dispatch = useDispatch();
     let totalQuantity = 0;
     let total = 0;
-    for (const product of props.cart) {
+    useEffect(() => {
+        dispatch(getCart());
+    }, [])
+    for (const product of cartRedux) {
         if (!product.quantity) {
             product.quantity = 1;
         }
-        const price = product.quantity?product.price*product.quantity:product.price;
+        const price = product.quantity ? product.price * product.quantity : product.price;
         total += price;
         totalQuantity += product.quantity;
     }
-    const shipping = total>0?15:0;
-    const tax = (total+shipping)*0.10;
-    const grandTotal = total+shipping+tax;
+    const shipping = total > 0 ? 15 : 0;
+    const tax = (total + shipping) * 0.10;
+    const grandTotal = total + shipping + tax;
 
     return (
         <div className='cart'>
