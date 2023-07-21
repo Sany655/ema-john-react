@@ -5,7 +5,6 @@ import { getStoredCart, addToDb, deleteFromDb, clearTheCart } from '../../utilit
 export const getCart = createAsyncThunk('cart/getCart', async () => {
     const savedCarts = getStoredCart();
     const keys = Object.keys(savedCarts);
-    console.log(keys);
     const url = '/products/byKeys';
     const response = await axios.post(url, keys);
     return { products: response.data };

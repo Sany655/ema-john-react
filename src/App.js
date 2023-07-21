@@ -17,7 +17,7 @@ init()
 
 function App() {
   // axios.defaults.baseURL = "http://localhost:5000/"
-  axios.defaults.baseURL = "https://ema-john-8e6s.onrender.com"
+  axios.defaults.baseURL = "https://ema-john-8e6s.onrender.com/"
   return (
     <AuthProvider>
       <Router>
