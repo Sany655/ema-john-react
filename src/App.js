@@ -35,9 +35,9 @@ function App() {
           <Route path='/review'>
             <Review />
           </Route>
-          <PrivateRoute path='/inventory'>
+          {/* <PrivateRoute path='/inventory'>
             <Inventory></Inventory>
-          </PrivateRoute>
+          </PrivateRoute> */}
           <PrivateRoute path='/shipping'>
             <Shipping></Shipping>
           </PrivateRoute>
