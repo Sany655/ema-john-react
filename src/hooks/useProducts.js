@@ -1,11 +1,11 @@
+import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
 
 const useProducts = () => {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        fetch('./fakeData/products.json')
-        .then(response=>response.json())
+        axios('./fakeData/products.json')
         .then(data=>{
             setProducts(data)
         })

@@ -12,9 +12,9 @@ function Cart(props) {
     useEffect(() => {
         dispatch(getCart());
     }, [])
-    for (const product of cartRedux) {
+    for (let product of cartRedux) {
         if (!product.quantity) {
-            product.quantity = 1;
+            product={...product,quantity:1};
         }
         const price = product.quantity ? product.price * product.quantity : product.price;
         total += price;

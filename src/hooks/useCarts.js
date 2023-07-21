@@ -1,20 +1,13 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import { getStoredCart } from "../utilities/fakedb"
-
+import axios from "axios";
 const useCarts = () => {
     const [cart, setCart] = useState([]);
     useEffect(() => {
         const savedCart = getStoredCart();
         const keys = Object.keys(savedCart);
-        fetch('http://localhost:5000/products/byKeys', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(keys)
-        })
-            .then(res => res.json())
+        axios.post('/products/byKeys', JSON.stringify(keys))
             .then(products => {
                 if (products.length) {
                     const storedCart = [];

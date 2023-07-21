@@ -8,14 +8,14 @@ import Cart from '../Cart/Cart'
 import './Review.css'
 
 function Review() {
-    const cart = useSelector(store=>store.cart).cart;
+    const cart = useSelector(store => store.cart).cart;
     const dispatch = useDispatch();
 
     return (
         <div className='review'>
             <div>
                 {
-                    cart.map((c, i) => (
+                    !cart.length ? <h2 style={{ textAlign: 'center' }}>Nothing in cart to review</h2> : cart.map((c, i) => (
                         <div key={i}>
                             <h3>{c.name}</h3>
                             <p>Price : {c.price}</p>
@@ -28,7 +28,8 @@ function Review() {
             </div>
 
             <Cart cart={cart}>
-                <Link to='/shipping' className='btn'>Proceed To Shipping</Link>
+                {cart.length > 0 && <Link to='/shipping' className='btn'>Proceed To Shipping</Link>}
+
             </Cart>
         </div>
     )

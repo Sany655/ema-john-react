@@ -11,10 +11,13 @@ import Shop from './components/Shop/Shop';
 import AuthProvider from './context/AuthProvider';
 import init from './Firebase/firebase.init';
 import Shipping from './components/Shipping/Shipping';
+import axios from 'axios';
 
 init()
 
 function App() {
+  // axios.defaults.baseURL = "http://localhost:5000/"
+  axios.defaults.baseURL = "https://ema-john-8e6s.onrender.com"
   return (
     <AuthProvider>
       <Router>

@@ -13,7 +13,7 @@ function Header() {
                 <ul>
                     <li><Link to="/">Shop</Link></li>
                     <li><Link to="review">Order Review</Link></li>
-                    <li><Link to="inventory">Manage Inventory here</Link></li>
+                    {/* <li><Link to="inventory">Manage Inventory here</Link></li> */}
                     <li><Link to="/order">My Orders</Link></li>
                     {
                         !user.uid?(
